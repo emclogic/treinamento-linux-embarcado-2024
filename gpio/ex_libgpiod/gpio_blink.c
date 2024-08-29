@@ -36,9 +36,11 @@ int main() {
     while (1) {
 
         gpiod_line_set_value(line, 1);
+        printf("LED ON");
         sleep(SLEEP_TIME);
 
         gpiod_line_set_value(line, 0);
+        printf("LED OFF");
         sleep(SLEEP_TIME);
 
     }
