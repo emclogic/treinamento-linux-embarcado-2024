@@ -2,19 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Controle</title>
+    <title>Controle LED</title>
     <script>
+        function setLedColor(color) {
+            const led = document.getElementById('led');
+            if (led) {
+                led.style.fill = color;
+            }
+        }
+
         function sendState(state) {
             fetch(`/control?state=${state}`)
                 .then(response => response.text())
                 .then(text => {
                     console.log(text);
+                    if (state === 'ON') {
+                        setLedColor('green');  // Altere a cor do LED para verde
+                    } else {
+                        setLedColor('black');  // Altere a cor do LED para preto
+                    }
                 });
         }
     </script>
+
 </head>
 <body>
-    <h1>Controle de Estado</h1>
+    <h1>Controle de LED</h1>
+    <svg src="static/led.svg"  width="100" height="100" viewBox="0 0 100 100"></svg>
     <button onclick="sendState('ON')">ON</button>
     <button onclick="sendState('OFF')">OFF</button>
 </body>

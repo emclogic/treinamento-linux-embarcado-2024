@@ -7,16 +7,19 @@ GPIO_LINE = 29
 chip = gpiod.Chip("/dev/gpiochip0")
 
 lines = chip.get_line(29)
-lines.request(consumer="web-gpio", type=gpiod.LINE_REQ_DIR_OUT)
 
 app = Flask(__name__)
 
 def gpio_on():
+    lines.request(consumer="web-gpio", type=gpiod.LINE_REQ_DIR_OUT)
     lines.set_value(1)
+    lines.release()
     print(f"GPIO {GPIO_LINE} HIGH")
 
 def gpio_off():
+    lines.request(consumer="web-gpio", type=gpiod.LINE_REQ_DIR_OUT)
     lines.set_value(0)
+    lines.release()
     print(f"GPIO {GPIO_LINE} LOW")
 
 def cleanup():
@@ -48,4 +51,5 @@ def control():
     return "Nenhum estado recebido", 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    gpio_off()
+    app.run(host='0.0.0.0', port=5000)
