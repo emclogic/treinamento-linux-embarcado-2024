@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Controle</title>
+    <script>
+        function sendState(state) {
+            fetch(`/control?state=${state}`)
+                .then(response => response.text())
+                .then(text => {
+                    console.log(text);
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Controle de Estado</h1>
+    <button onclick="sendState('ON')">ON</button>
+    <button onclick="sendState('OFF')">OFF</button>
+</body>
+</html>
