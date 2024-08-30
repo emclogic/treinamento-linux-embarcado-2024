@@ -1,0 +1,14 @@
+[Unit]
+Description=web-gpio app
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 /caminho/para/seu/app.py
+WorkingDirectory=/caminho/para/seu/diretório
+Restart=always
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
