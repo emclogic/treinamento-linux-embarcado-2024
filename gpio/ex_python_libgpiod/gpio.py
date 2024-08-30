@@ -2,31 +2,29 @@
 
 #DOC - https://pypi.org/project/gpiod/
 
-import gpiod
 import time
+from gpiod.line import Direction, Value
+import gpiod
 
-chip = gpiod.Chip('/dev/gpiochip0')
+GPIO_LINE = 29
 
-GPIO_NUMBER = 29
-
-line = chip.get_line(GPIO_NUMBER)
-
-# Configura a linha para ser uma saída e inicializa em estado baixo (apagado)
-config = gpiod.LineRequest()
-config.consumer = "gpio_toogle"
-config.request_type = gpiod.LINE_REQ_DIR_OUT
-line.request(config, default_val=0)
-
-try:
+with gpiod.request_lines(
+    "/dev/gpiochip0",  
+    consumer="toggle-example",  
+    config={
+        GPIO_LINE: gpiod.LineSettings(  
+            direction=Direction.OUTPUT,  
+            output_value=Value.INACTIVE  
+        )
+    },
+) as request:
     while True:
-        line.set_value(1) 
-        print(f"gpio {GPIO_NUMBER} - HIGH")
-        time.sleep(1)      
-        line.set_value(0) 
-        print(f"gpio {GPIO_NUMBER} - LOW")
-        time.sleep(1)      
-except KeyboardInterrupt:
-    print("Interrompido pelo usuário")
+        # Ativa o pino (define como alto)
+        request.set_value(GPIO_LINE, Value.ACTIVE)
+        print(f"Pino {GPIO_LINE} HIGH")
+        time.sleep(1)
 
-finally:
-    line.release() 
+        # Desativa o pino (define como baixo)
+        request.set_value(GPIO_LINE, Value.INACTIVE)
+        print(f"Pino {GPIO_LINE} LOW")
+        time.sleep(1)
