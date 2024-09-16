@@ -14,7 +14,7 @@ except serial.SerialException as e:
     print(f"Error opening serial port: {e}")
     exit()
 
-message = "Hello, Serial!\n"
+message = "HelloWorld, Serial in Python!\n"
 ser.write(message.encode('utf-8'))
 print(f"Sent: {message.strip()}")
 

@@ -3,7 +3,7 @@
 
 int main() {
     struct sp_port *port;
-    const char *port_name = "/dev/ttyS0"; 
+    const char *port_name = "/dev/ttyAMA0";
 
     if (sp_get_port_by_name(port_name, &port) != SP_OK) {
         printf("Error finding port %s\n", port_name);
@@ -21,7 +21,7 @@ int main() {
     sp_set_stopbits(port, 1);
     sp_set_flowcontrol(port, SP_FLOWCONTROL_NONE);
 
-    const char *msg = "Hello, Serial!\n";
+    const char *msg = "Hello World, Serial in C!\n";
     int bytes_written = sp_nonblocking_write(port, msg, strlen(msg));
     if (bytes_written < 0) {
         printf("Error writing to serial port\n");
