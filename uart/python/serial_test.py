@@ -3,7 +3,7 @@
 import serial
 import time
 
-PORT = '/dev/ttyS0'   
+PORT = '/dev/serial0'   
 BAUDRATE = 115200     
 TIMEOUT = 1           
 
