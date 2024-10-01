@@ -1,0 +1,36 @@
+---
+- name: Preparar ambiente no Raspberry Pi Zero 2W
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Atualizar a lista de pacotes
+      apt:
+        update_cache: yes
+
+    - name: Instalar pacotes do APT
+      apt:
+        name:
+          - git
+          - build-essential
+          - minicom
+          - screen
+          - i2c-tools
+          - libgpiod-dev
+          - libserialport-dev
+          - uidmap
+          - python3-pip
+          - python3-venv
+          - python3-serial
+          - python3-libgpiod
+          - python3-flask
+          - python3-flaskext.wtf
+        state: present
+
+    - name: Instalar Docker
+      shell: curl -sSL https://get.docker.com | sh
+
+    - name: Adicionar usuário atual ao grupo docker
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
