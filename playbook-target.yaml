@@ -2,12 +2,11 @@
 - name: Preparar ambiente no Raspberry Pi Zero 2W
   hosts: localhost
   gather_facts: yes
-  become: true
 
   vars:
     # Cria o caminho do venv no diretório $HOME
     venv_path: "{{ ansible_env.HOME }}/.venv"
-    # ...ou no mesmo diretório do repositorio...
+    # ...ou no mesmo diretório do repositorio.
     # venv_path: "{{ ansible_env.PWD }}/.venv"
 
   tasks:
@@ -18,6 +17,7 @@
     - name: Atualiza cache do apt
       apt:
         update_cache: yes
+      become: yes
 
     - name: Instalacao de pacotes
       apt:
@@ -37,6 +37,7 @@
           - python3-flask
           - python3-flaskext.wtf
         state: present
+      become: yes
 
     - name: Instalacao do docker
       shell: curl -sSL https://get.docker.com | sh
@@ -63,3 +64,4 @@
           - mfrc522
         virtualenv: "{{ venv_path }}"
         virtualenv_command: "python3 -m venv"
+      become: no
