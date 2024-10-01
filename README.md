@@ -12,7 +12,7 @@ Para executar o playbook é preciso instalar o ansible no raspberry pi.
 apt install -y ansible
 ```
 
-Execute o playbook para instalacao dos pacotes necessarios no target.
+Execute este playbook no target para instalacao dos pacotes (binarios, bibliotecas) necessarios.
 
 ```bash
 ansible-playbook playbook-target.yml
