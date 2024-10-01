@@ -1,0 +1,8 @@
+.vscode/
+.venv/
+sonar-project.properties
+run-sonarscanner.sh
+__pycache__
+.pytest_cache
+*.o
+serial_libsp
