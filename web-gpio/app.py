@@ -1,4 +1,6 @@
+import os
 from flask import Flask, render_template, request
+from flask_wtf.csrf import CSRFProtect
 import gpiod
 import atexit
 
@@ -6,9 +8,12 @@ GPIO_LINE = 29
 
 chip = gpiod.Chip("/dev/gpiochip0")
 
-lines = chip.get_line(29)
+lines = chip.get_line(GPIO_LINE)
 
 app = Flask(__name__)
+secret_key = os.urandom(32)
+app.config['SECRET_KEY'] = secret_key.hex()
+csrf = CSRFProtect(app)
 
 def gpio_on():
     lines.request(consumer="web-gpio", type=gpiod.LINE_REQ_DIR_OUT)
@@ -52,4 +57,4 @@ def control():
 
 if __name__ == '__main__':
     gpio_off()
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
