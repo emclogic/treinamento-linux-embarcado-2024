@@ -17,3 +17,27 @@ Execute este playbook no target para instalacao dos pacotes (binarios, bibliotec
 ```bash
 ansible-playbook playbook-target.yml
 ```
+
+Desde a versão Bookworm, os usuarios nao devem instalar diretamente as bibliotecas do python diretamente no sistema.
+
+Ao inves disso, utilize um ambiente virtual (venv), para instalar uma biblioteca a nivel de sistema, para todos os usuarios, instale utilizand apt.
+
+A vantagem de se utilizar ambientes virtuais e que (caso necessario) voce pode utilizar versoes diferentes das bibliotecas para cada projeto.
+
+O playbook cria o ambiente virtual em $HOME/.venv, para ativa-lo utilize o comando:
+
+```bash
+source ~/.venv/bin/activate
+```
+
+O prompt do shell ficara parecido com isso:
+
+```bash
+(.venv) $
+```
+
+Quando finalizar o trabalho no projeto, execute o seguinte comando a partir de qualquer diretorio para finalizar a execucao em ambiente virtual.
+
+```bash
+deactivate
+```
