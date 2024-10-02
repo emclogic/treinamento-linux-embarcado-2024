@@ -6,3 +6,5 @@ __pycache__
 .pytest_cache
 *.o
 serial_libsp
+gpio_blink
+rascunho.txt
