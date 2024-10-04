@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 from time import sleep
 import sys
 import RPi.GPIO as GPIO
@@ -10,6 +12,7 @@ try:
         id, text = leitorRfid.read()
         print("ID do cartao: ", id)
         sleep(1)
+
 except KeyboardInterrupt:
     GPIO.cleanup()
     raise
