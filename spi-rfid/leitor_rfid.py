@@ -1,7 +1,6 @@
 #!/bin/env python3
 
 from time import sleep
-import sys
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
@@ -12,9 +11,11 @@ leitorRfid = SimpleMFRC522()
 def main():
     try:
         while True:
-            print("Aproxime o cartao da leitora...")
+            print("----------------------------")
+            print("Aproxime o cartao do leitor:")
             cardid, text = leitorRfid.read()
             print("ID do cartao: ", cardid)
+            print("Dados:")
             print(text)
             sleep(1)
 
