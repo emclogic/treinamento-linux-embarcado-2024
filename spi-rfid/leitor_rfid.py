@@ -13,8 +13,8 @@ def main():
     try:
         while True:
             print("Aproxime o cartao da leitora...")
-            id, text = leitorRfid.read()
-            print("ID do cartao: ", id)
+            cardid, text = leitorRfid.read()
+            print("ID do cartao: ", cardid)
             print(text)
             sleep(1)
 
