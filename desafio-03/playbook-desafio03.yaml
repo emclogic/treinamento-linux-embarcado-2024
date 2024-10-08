@@ -1,0 +1,35 @@
+---
+- name: Setup Yocto environment
+  hosts: localhost
+  vars:
+    yocto_dir: "{{ lookup('env', 'HOME') }}/src/embarcados-desafio-03"
+    repos:
+      - repo: "git://git.yoctoproject.org/poky"
+        dest: "poky"
+        branch: "scarthgap"
+      - repo: "git://git.openembedded.org/meta-openembedded"
+        dest: "meta-openembedded"
+        branch: "scarthgap"
+      - repo: "git://git.yoctoproject.org/meta-raspberrypi"
+        dest: "meta-raspberrypi"
+        branch: "scarthgap"
+    build_dir: "build-treinamento"
+
+  tasks:
+    - name: Ensure Yocto directory exists
+      file:
+        path: "{{ yocto_dir }}"
+        state: directory
+
+    - name: Clone Yocto repositories
+      git:
+        repo: "{{ item.repo }}"
+        dest: "{{ yocto_dir }}/{{ item.dest }}"
+        version: "{{ item.branch }}"
+      with_items: "{{ repos }}"
+
+    - name: Setup Yocto build environment
+      ansible.builtin.shell: ./oe-init-build-env build-treinamento
+      args:
+        chdir: "{{ yocto_dir }}/poky"
+
