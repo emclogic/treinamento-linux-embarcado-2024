@@ -16,6 +16,9 @@ $ bitbake-layers add-layer ~/src/embarcados-desafio03/meta-raspberrypi
 $ bitbake-layers add-layer ~/src/embarcados-desafio03/meta-openembedded/meta-oe
 $ MACHINE=raspberrypi0-2w-64 bitbake core-image-full-cmdline --runall=fetch
 $ MACHINE=raspberrypi0-2w-64 bitbake core-image-full-cmdline
+$ MACHINE=raspberrypi0-2w-64 bitbake core-image-full-cmdline -c populate_sdk
+ou
+$ MACHINE=raspberrypi0-2w-64 bitbake core-image-full-cmdline -c populate_sdk_ext
 ```
 
 ## Playbook
@@ -25,3 +28,4 @@ Disponibilizei um playbook ansible que faz a preparacao do ambiente, exceto a ad
 ```bash
 ansible-playbook playbook-desafio03.yaml
 ```
+
