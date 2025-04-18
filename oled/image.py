@@ -19,7 +19,6 @@ import adafruit_ssd1306
 RESET_PIN = digitalio.DigitalInOut(board.D4)
 
 i2c = board.I2C()  # uses board.SCL and board.SDA
-# i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
 
 # Create the SSD1306 OLED class.
 # The first two parameters are the pixel width and pixel height.

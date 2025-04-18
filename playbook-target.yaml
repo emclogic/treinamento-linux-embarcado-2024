@@ -1,0 +1,67 @@
+---
+- name: Preparar ambiente no Raspberry Pi Zero 2W
+  hosts: localhost
+  gather_facts: yes
+
+  vars:
+    # Cria o caminho do venv no diretório $HOME
+    venv_path: "{{ ansible_env.HOME }}/.venv"
+    # ...ou no mesmo diretório do repositorio.
+    # venv_path: "{{ ansible_env.PWD }}/.venv"
+
+  tasks:
+    - name: Identifica usuario
+      command: whoami
+      register: executing_user
+
+    - name: Atualiza cache do apt
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Instalacao de pacotes
+      apt:
+        name:
+          - git
+          - build-essential
+          - minicom
+          - screen
+          - i2c-tools
+          - libgpiod-dev
+          - libserialport-dev
+          - uidmap
+          - python3-pip
+          - python3-venv
+          - python3-serial
+          - python3-libgpiod
+          - python3-flask
+          - python3-flaskext.wtf
+        state: present
+      become: yes
+
+    - name: Instalacao do docker
+      shell: curl -sSL https://get.docker.com | sh
+
+    - name: Adicionar usuário atual ao grupo docker
+      user:
+        name: "{{ lookup('env', 'USER') }}"
+        groups: docker
+        append: yes
+
+    - name: Cria ambiente virtual se nao existir
+      command: python3 -m venv {{ venv_path }}
+      args:
+        creates: "{{ venv_path }}/bin/activate"
+      become: no
+
+    - name: Instalacao de pacotes via pip3
+      pip:
+        name:
+          - adafruit-circuitpython-ssd1306
+          - adafruit-circuitpython-bmp280
+          - pillow
+          - spidev
+          - mfrc522
+        virtualenv: "{{ venv_path }}"
+        virtualenv_command: "python3 -m venv"
+      become: no
